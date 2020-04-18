@@ -17,7 +17,8 @@
                 <nav class="nav flex-column">
                     <a class="nav-link text-info pl-0 pb-0" href="/about">Введение</a>
                     <a class="nav-link text-info pl-0 pb-0" href="/docs/architecture">Архитектура</a>
-                    <a class="nav-link text-info pl-0 pb-0" href="https://api-code-examples.vs24.su" target="_blank">Документация API</a>
+                    <a class="nav-link text-info pl-0 pb-0 mt-3 border-top" href="https://api.code-examples.vs24.su" target="_blank">Документация API</a>
+                    <a class="nav-link text-info pl-0 pb-0" href="https://github.com/PetrovichMirr/code-examples" target="_blank">Исходный код на GitHub</a>
                 </nav>
             </div>
             <div class="col-12 col-lg-9">
