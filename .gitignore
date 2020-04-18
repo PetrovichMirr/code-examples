@@ -1,0 +1,7 @@
+/access*
+/error*
+/public/robots.txt
+/public/.htaccess
+/public_html
+/vendor
+/.env

@@ -1,0 +1,1 @@
+<app_raw_code>@phpeval(if (isset($viewData['user']) && $viewData['user']) {echo view()->render('chunks/navbar_user.php', ['user' => $viewData['user']]); } else { echo view()->render('chunks/navbar_guest.php');})</app_raw_code>

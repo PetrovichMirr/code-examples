@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor>
+    <title>PHP Кодовство. Документация API</title>
+    <parser>
+        <default-package-name>PHP-Coding-Example</default-package-name>
+        <encoding>utf-8</encoding>
+        <target>../phpdoc/src</target>
+        <markers>
+            <item>TODO</item>
+            <item>FIXME</item>
+        </markers>
+        <extensions>
+            <extension>php</extension>
+            <extension>php3</extension>
+            <extension>phtml</extension>
+        </extensions>
+        <visibility></visibility>
+    </parser>
+    <files>
+        <directory>app/Contracts</directory>
+        <directory>app/Core</directory>
+        <ignore-hidden>true</ignore-hidden>
+        <ignore-symlinks>true</ignore-symlinks>
+    </files>
+    <transformer>
+        <target>../phpdoc/dist</target>
+    </transformer>
+    <logging>
+        <level>notice</level>
+    </logging>
+    <transformations>
+        <template name="clean"/>
+    </transformations>
+    <translator>
+        <locale>ru</locale>
+    </translator>
+</phpdocumentor>

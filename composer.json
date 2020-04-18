@@ -1,0 +1,25 @@
+{
+    "name": "vseti24/code_examples_task_list",
+    "description": "Пример кода: список задач.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PetrovichMirr",
+            "email": "vseti-24@mail.ru"
+        }
+    ],
+    "require": {
+        "cartalyst/sentinel": "^4.0",
+        "illuminate/database": "^7.6",
+        "illuminate/events": "^7.6",
+        "symfony/http-foundation": "^5.0",
+        "erusev/parsedown": "^1.7",
+        "vlucas/phpdotenv": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
