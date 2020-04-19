@@ -1,6 +1,6 @@
 {
-    "name": "vseti24/code_examples_task_list",
-    "description": "Пример кода: список задач.",
+    "name": "vseti24/code-examples",
+    "description": "Пример кода.",
     "type": "project",
     "license": "MIT",
     "authors": [

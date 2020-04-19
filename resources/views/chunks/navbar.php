@@ -5,13 +5,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item <app_code>out($activeHome)</app_code>">
+            <li class="nav-item <app_code>ifequal(active, @chunks/uri_path.php, /)</app_code>">
                 <a class="nav-link font-weight-bold" href="/">Список задач</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <app_code>ifequal(active, @chunks/uri_path.php, /about)</app_code>">
                 <a class="nav-link font-weight-bold" href="/about">О проекте</a>
             </li>
-            <li class="nav-item <app_code>out($activeContacts)</app_code>">
+            <li class="nav-item <app_code>ifequal(active, @chunks/uri_path.php, /contacts)</app_code>">
                 <a class="nav-link font-weight-bold" href="/contacts">Контакты</a>
             </li>
         </ul>

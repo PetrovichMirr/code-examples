@@ -7,7 +7,7 @@
 <body>
     <div class="bg-light">
         <div class="container">
-            <app_raw_code>out(@chunks/navbar_no_active.php)</app_raw_code>
+            <app_raw_code>out(@chunks/navbar.php)</app_raw_code>
         </div>
     </div>
     <div class="container py-4">

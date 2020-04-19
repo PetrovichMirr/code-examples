@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Core;
 
 use App\Contracts\Kernel as IKernel;
@@ -28,7 +27,8 @@ class Kernel implements IKernel
         require APP_PATH_FILE_ROUTES;
 
         // Определяем обработчик запроса
-        $routeAction = route()->getAction($request->getUriPath(), $request->getMethod());
+        $routeAction = route()->getAction($request->getUriPath(),
+                $request->getMethod());
 
         // Проверяем наличие обработчика
         if (!isset($routeAction)) {
@@ -36,8 +36,10 @@ class Kernel implements IKernel
         }
 
         // Вызываем обработчик и отправляем ответ приложения
-        // Обработчик должен возвращать ответ (\App\Contracts\Response) или данные для тела ответа
-        $response = call_user_func($routeAction->getAction(), $routeAction->getParams());
+        // Обработчик должен возвращать ответ (\App\Contracts\Response)
+        // или данные для тела ответа
+        $response = call_user_func($routeAction->getAction(),
+                $routeAction->getParams());
         if ($response instanceof \App\Contracts\Response) {
             $response->send();
         } else {
@@ -45,7 +47,12 @@ class Kernel implements IKernel
         }
         // Режим отладки
         if (APP_DEBUG) {
-            echo 'Полное время работы скрипта: ', (microtime(true) - APP_START), ' секунд.';
+            echo 'Полное время работы скрипта: ',
+            number_format((microtime(true) - APP_START), 6, '.', ' '),
+            ' секунд.',
+            ' Пиковое значение выделенного объема памяти: ',
+            number_format(memory_get_peak_usage(true), 0, '.', ' '),
+            ' байт';
         }
         exit;
     }

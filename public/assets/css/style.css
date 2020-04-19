@@ -17,4 +17,16 @@ h2 {
     background-color: #17a2b8;
     border-color: #17a2b8;
 }
-
+.nav .nav-link.active {
+    font-weight: 700;
+}
+a {
+    color: #17a2b8;
+}
+a:hover {
+    color: #0f6674;
+    text-decoration: none;
+}
+pre code {
+    color: #e83e8c;
+}

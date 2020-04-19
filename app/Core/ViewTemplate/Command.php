@@ -265,6 +265,52 @@ class Command
     }
 
     /**
+     * Выполняет одноименную команду шаблона. Содержимое первого параметра
+     * отображается, если значения второго и третьего параметра равны
+     *
+     * Формат команды:
+     * имя_команды(параметр_для_вывода, параметр_2, параметр_3)
+     * Команда принимает только три обязательных параметра,
+     * если указано более трёх параметров,
+     * будет обработано только три первых из них.
+     *
+     * Допустимый тип параметров: php-переменная, вложенный шаблон, строка.
+     *
+     * @param array $params Список параметров команды
+     * @param array $viewData Массив данных, доступных для вывода в шаблоне.
+     *
+     * @return string Результат выполнения команды
+     */
+    private static function ifequal($params, $viewData)
+    {
+        $bool = self::compileParam($params[1], $viewData) == self::compileParam($params[2], $viewData);
+        return $bool ? self::compileParam($params[0], $viewData) : '';
+    }
+
+    /**
+     * Выполняет одноименную команду шаблона. Содержимое первого параметра
+     * отображается, если значения второго и третьего параметра НЕ равны
+     *
+     * Формат команды:
+     * имя_команды(параметр_для_вывода, параметр_2, параметр_3)
+     * Команда принимает только три обязательных параметра,
+     * если указано более трёх параметров,
+     * будет обработано только три первых из них.
+     *
+     * Допустимый тип параметров: php-переменная, вложенный шаблон, строка.
+     *
+     * @param array $params Список параметров команды
+     * @param array $viewData Массив данных, доступных для вывода в шаблоне.
+     *
+     * @return string Результат выполнения команды
+     */
+    private static function ifnotequal($params, $viewData)
+    {
+        $bool = self::compileParam($params[1], $viewData) != self::compileParam($params[2], $viewData);
+        return $bool ? self::compileParam($params[0], $viewData) : '';
+    }
+
+    /**
      * Выполняет одноименную команду шаблона. Исполняет PHP-код.
      *
      * Для этой команды не используется парсинг параметров,
@@ -284,10 +330,10 @@ class Command
         $code = $params[0];
         // Пишем вывод в буфер
         ob_start();
-        eval($code);
-        $result = ob_get_contents();
+        $returnResult = eval($code);
+        $echoResult = ob_get_contents();
         ob_end_clean();
-        return $result;
+        return $echoResult . $returnResult;
     }
 
 }

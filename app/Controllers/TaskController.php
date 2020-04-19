@@ -67,7 +67,6 @@ class TaskController
 
         $data = view()->render('pages/login.php', [
             'error' => '',
-            'scriptTime' => (microtime(true) - APP_START),
         ]);
         return response()->setBody($data);
     }
@@ -103,7 +102,6 @@ class TaskController
 
         $data = view()->render('pages/login.php', [
             'error' => $error,
-            'scriptTime' => (microtime(true) - APP_START),
         ]);
         return response()->setBody($data);
     }
@@ -122,16 +120,24 @@ class TaskController
     }
 
     /**
+     * Получение пользователя
+     *
+     * @return mixed Объект пользователя или null
+     */
+    private function sentinelUser()
+    {
+        // Инициализация Sentinel.
+        $this->sentinelBoot();
+        return Sentinel::check();
+    }
+
+    /**
      * Вывод списка моделей.
      *
      * @return mixed Ответ приложения
      */
     public function index()
     {
-        // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
-
         // Сортировка
         $request = request();
         $orderKey = 'order';
@@ -176,21 +182,17 @@ class TaskController
         }
 
         $data = view()->render('pages/tasks.php', [
-            'user' => $user,
+            'user' => $this->sentinelUser(),
             'orderValue' => $orderValue,
             'orderKey' => $orderKey,
             'prefixAsc' => $prefixAsc,
             'prefixDesc' => $prefixDesc,
             'orderAttrs' => $orderAttrs,
-            'uriPath' => $request->getUriPath(),
             'added' => 0,
             'pagination' => $pagination,
             'oldInputs' => $oldInputs,
             'errors' => $errors,
-            'activeHome' => 'active',
-            'activeContacts' => '',
             'tasks' => $tasks,
-            'scriptTime' => (microtime(true) - APP_START),
         ]);
         return response()->setBody($data);
     }
@@ -202,10 +204,6 @@ class TaskController
      */
     public function store()
     {
-        // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
-
         // Данные сортировки
         $orderKey = 'order';
         $orderAttrs = ['user_name' => 'Имя пользователя', 'email' => 'E-mail', 'done' => 'Статус'];
@@ -240,21 +238,17 @@ class TaskController
         $tasks = $task->select()->where()->limit(MODELS_PER_PAGE)->offset($pagination['offset'])->execute()->fetchAll();
 
         $data = view()->render('pages/tasks.php', [
-            'user' => $user,
+            'user' => $this->sentinelUser(),
             'orderValue' => '',
             'orderKey' => $orderKey,
             'prefixAsc' => $prefixAsc,
             'prefixDesc' => $prefixDesc,
             'orderAttrs' => $orderAttrs,
-            'uriPath' => request()->getUriPath(),
             'added' => $added,
             'pagination' => $pagination,
             'oldInputs' => $oldInputs,
             'errors' => $errors,
-            'activeHome' => 'active',
-            'activeContacts' => '',
             'tasks' => $tasks,
-            'scriptTime' => (microtime(true) - APP_START),
         ]);
         return response()->setBody($data);
     }
@@ -270,7 +264,9 @@ class TaskController
     {
         // Цепочка обработки входных данных (ID)
         $inputChain = inputChain()
-                ->setChain([InputChain::FILTER_TRIM, InputChain::RULE_NOT_EMPTY, InputChain::RULE_INT])
+                ->setChain([InputChain::FILTER_TRIM,
+                    InputChain::RULE_NOT_EMPTY,
+                    InputChain::RULE_INT])
                 ->setData($inputId);
         // Проверка корректности ID
         if ($inputChain->handle() !== true) {
@@ -305,14 +301,9 @@ class TaskController
      */
     public function show($inputId)
     {
-        // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
-
         $data = view()->render('pages/task.php', [
-            'user' => $user,
+            'user' => $this->sentinelUser(),
             'task' => $this->findTaskOrFail($inputId),
-            'scriptTime' => (microtime(true) - APP_START),
         ]);
         return response()->setBody($data);
     }
@@ -326,9 +317,7 @@ class TaskController
      */
     public function edit($inputId)
     {
-        // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
+        $user = $this->sentinelUser();
         if (!$user) {
             response()->redirect('/');
         }
@@ -341,7 +330,6 @@ class TaskController
             'user' => $user,
             'errors' => $errors,
             'task' => $task,
-            'scriptTime' => (microtime(true) - APP_START),
         ]);
         return response()->setBody($data);
     }
@@ -356,8 +344,7 @@ class TaskController
     public function update($inputId)
     {
         // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
+        $user = $this->sentinelUser();
         if (!$user) {
             response()->redirect('/');
         }
@@ -385,7 +372,6 @@ class TaskController
             'user' => $user,
             'errors' => $errors,
             'task' => $task,
-            'scriptTime' => (microtime(true) - APP_START),
         ]);
         return response()->setBody($data);
     }
@@ -400,8 +386,7 @@ class TaskController
     public function destroy($inputId)
     {
         // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
+        $user = $this->sentinelUser();
         if (!$user) {
             response()->redirect('/');
         }
@@ -418,15 +403,8 @@ class TaskController
      */
     public function contactsIndex()
     {
-        // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
-
         $data = view()->render('pages/contacts.php', [
-            'user' => $user,
-            'activeHome' => '',
-            'activeContacts' => 'active',
-            'scriptTime' => (microtime(true) - APP_START),
+            'user' => $this->sentinelUser(),
         ]);
         return response()->setBody($data);
     }
@@ -440,10 +418,6 @@ class TaskController
      */
     public function getMarkdownResponse($markdownFile)
     {
-        // Инициализация Sentinel.
-        $this->sentinelBoot();
-        $user = Sentinel::check();
-
         // Парсим файл markdown
         $parsedown = new \Parsedown();
         if (!file_exists($markdownFile)) {
@@ -451,8 +425,7 @@ class TaskController
         }
         $data = view()->render('pages/markdown.php', [
             'html' => $parsedown->text(file_get_contents($markdownFile)),
-            'user' => $user,
-            'scriptTime' => (microtime(true) - APP_START),
+            'user' => $this->sentinelUser(),
         ]);
         return response()->setBody($data);
     }

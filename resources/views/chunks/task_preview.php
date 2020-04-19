@@ -1,6 +1,6 @@
 <div class="mt-4 pb-2 border-bottom">
     <h3 class="mb-3">
-        <a href="tasks/<app_code>out($task->id)</app_code>" class="text-info text-decoration-none">
+        <a href="/tasks/<app_code>out($task->id)</app_code>" class="text-info text-decoration-none">
             Задача № <app_code>out($task->id)</app_code>
         </a>
     </h3>

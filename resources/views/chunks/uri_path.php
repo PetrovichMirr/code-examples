@@ -1,0 +1,1 @@
+<app_code>@phpeval(return request()->getUriPath();)</app_code>
