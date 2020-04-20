@@ -104,3 +104,8 @@ route()->get('contacts', [
     new \App\Controllers\TaskController(),
     'contactsIndex',
 ]);
+// Страница с выполнением тестового задания
+route()->get('test', [
+    new \App\Controllers\TestController(),
+    'testIndex',
+]);
